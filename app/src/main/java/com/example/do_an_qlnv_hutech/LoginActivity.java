@@ -47,13 +47,13 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnregister);
         signup = findViewById(R.id.signup);
 
-        signup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent in = new Intent(getApplicationContext(),RegisterActivity.class);
-                startActivity(in);
-            }
-        });
+//        signup.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent in = new Intent(getApplicationContext(),RegisterActivity.class);
+//                startActivity(in);
+//            }
+//        });
 
         // Xử lý sự kiện nhấn nút Đăng nhập
         btnLogin.setOnClickListener(view -> {
@@ -81,6 +81,8 @@ public class LoginActivity extends AppCompatActivity {
                 if (rs.next()) {
                     Log.d("DEBUG", "Login successful for user: " + user); // Ghi log khi đăng nhập thành công
                     Toast.makeText(this, "Đăng nhập thành công! Chào mừng " + user, Toast.LENGTH_SHORT).show();
+                    Intent in = new Intent(getApplicationContext(),MainActivity2.class);
+                    startActivity(in);
                 } else {
                     Log.d("DEBUG", "Login failed for user: " + user); // Ghi log khi đăng nhập thất bại
                     runOnUiThread(() -> Toast.makeText(this, "Tên đăng nhập hoặc mật khẩu không đúng!", Toast.LENGTH_SHORT).show());
