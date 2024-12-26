@@ -9,4 +9,5 @@
     <color name="teal_700">#ff018786</color>
     <color name="purple">#8692f7</color>
     <color name="lavender">#8692f7</color>
+    <color name="colorPrimaryDark">#202F65</color>
 </resources>

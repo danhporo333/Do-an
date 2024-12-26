@@ -45,7 +45,6 @@
                     android:padding="16dp">
 
                     <!-- CardView Items -->
-
                     <androidx.cardview.widget.CardView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -72,7 +71,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
-                                android:text="main activity 2"
+                                android:text="Quản lý giảng viên"
                                 android:textSize="16sp"
                                 android:textColor="@color/black" />
                         </LinearLayout>
@@ -103,7 +102,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
-                                android:text="Home"
+                                android:text="Lịch giảng dạy"
                                 android:textSize="16sp"
                                 android:textColor="@color/black" />
                         </LinearLayout>
