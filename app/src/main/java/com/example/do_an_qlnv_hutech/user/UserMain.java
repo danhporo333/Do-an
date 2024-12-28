@@ -1,9 +1,11 @@
 package com.example.do_an_qlnv_hutech.user;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +21,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.do_an_qlnv_hutech.R;
+import com.example.do_an_qlnv_hutech.admin.XuatLich;
 import com.example.do_an_qlnv_hutech.database.ConnectionDB;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -28,7 +31,7 @@ import java.sql.Connection;
 public class UserMain extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     Connection conn;
-    LinearLayout book;
+    LinearLayout book2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,11 +45,22 @@ public class UserMain extends AppCompatActivity {
         ConnectionDB connectionDB = new ConnectionDB();
         conn = connectionDB.Conn();
 
-        book = findViewById(R.id.book);
-        book.setOnClickListener(new View.OnClickListener() {
+        Intent intent = getIntent();
+        int idNhanVien = intent.getIntExtra("id_nhanvien", -1);  // Lấy id_nhanvien
+        int idRole = intent.getIntExtra("id_role", -1);  // Lấy id_role
+
+        Log.d("DEBUG_USERMAIN", "ID Nhân viên: " + idNhanVien);  // Log giá trị để kiểm tra
+        Log.d("DEBUG_USERMAIN", "ID Vai trò: " + idRole);  // Log giá trị để kiểm tra
+
+        //ánh xạ
+        book2 = findViewById(R.id.book2);
+        book2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent in = new Intent(getApplicationContext(), XuatLichUser.class);
+                in.putExtra("id_nhanvien", idNhanVien);
+                in.putExtra("id_role", idRole);
+                startActivity(in);
             }
         });
 
@@ -65,6 +79,8 @@ public class UserMain extends AppCompatActivity {
                 showDialog();
             }
         });
+
+
     }
 
     @Override

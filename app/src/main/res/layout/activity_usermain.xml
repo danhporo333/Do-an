@@ -7,7 +7,7 @@
     android:id="@+id/drawer_layout"
     android:fitsSystemWindows="true"
     tools:openDrawer="start"
-    tools:context=".MainActivity2">
+    tools:context=".user.UserMain">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -45,7 +45,6 @@
                     android:padding="16dp">
 
                     <!-- CardView Items -->
-
                     <androidx.cardview.widget.CardView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -55,7 +54,7 @@
                         android:layout_columnWeight="1">
 
                         <LinearLayout
-                            android:id="@+id/book"
+                            android:id="@+id/book2"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center"

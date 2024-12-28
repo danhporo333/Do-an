@@ -24,7 +24,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.do_an_qlnv_hutech.R;
 import com.example.do_an_qlnv_hutech.database.ConnectionDB;
-import com.example.do_an_qlnv_hutech.database.CustomAdapter;
+import com.example.do_an_qlnv_hutech.database.CustomAdapterNV;
 import com.example.do_an_qlnv_hutech.model.NhanVien;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -39,7 +39,7 @@ public class Listview extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     ListView lvNhanVien;
     ArrayList<NhanVien> arrnv;
-    CustomAdapter adapter;
+    CustomAdapterNV adapter;
     Connection conn; // Kết nối cơ sở dữ liệu
 
     @Override
@@ -105,7 +105,7 @@ public class Listview extends AppCompatActivity {
                 }
                 // Chỉ gọi setAdapter khi có dữ liệu
                 if (arrnv.size() > 0) {
-                    adapter = new CustomAdapter(this, arrnv);
+                    adapter = new CustomAdapterNV(this, arrnv);
                     lvNhanVien.setAdapter(adapter);
                 } else {
                     Log.d("DATA_ERROR", "Không có dữ liệu trong arrnv");

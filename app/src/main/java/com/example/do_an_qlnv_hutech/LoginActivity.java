@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -48,74 +49,50 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnregister);
         signup = findViewById(R.id.signup);
 
-
-//        signup.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent in = new Intent(getApplicationContext(),RegisterActivity.class);
-//                startActivity(in);
-//            }
-//        });
-
         // Xử lý sự kiện nhấn nút Đăng nhập
-        btnLogin.setOnClickListener(view -> {
-            String username = edttendangnhap.getText().toString().trim();
-            String password = edtpassword.getText().toString().trim();
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String username = edttendangnhap.getText().toString();
+                String password = edtpassword.getText().toString();
+                if (username.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(LoginActivity.this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+                }
+                try {
+                    String query = "SELECT id_nhanvien, id_role FROM login WHERE username = ? AND password = ?";
+                    PreparedStatement ps = conn.prepareStatement(query);
+                    ps.setString(1, username);
+                    ps.setString(2, password);
+                    ResultSet rs = ps.executeQuery();
+                    if (rs.next()) {
+                        int idNhanVien = rs.getInt("id_nhanvien");
+                        int idRole = rs.getInt("id_role");
+                        Log.d("DEBUG_LOGIN", "id_nhanvien: " + idNhanVien + ", id_role: " + idRole);
+                        Intent intent;
+                        // Điều hướng dựa trên vai trò
+                        if (idRole == 1) { // 1 = Admin
+                            intent = new Intent(LoginActivity.this, AdminMain.class);
+                        } else if (idRole == 2) { // 2 = User
+                            intent = new Intent(LoginActivity.this, UserMain.class);
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Vai trò không xác định", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
 
-            if (username.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Vui lòng nhập đủ thông tin!", Toast.LENGTH_SHORT).show();
-            } else {
-                checkLogin(username, password);
+                        // Chuyển tới màn hình chính
+                        intent.putExtra("id_nhanvien", idNhanVien);
+                        intent.putExtra("id_role", idRole);
+                        Log.d("DEBUG_LOGIN", "Dữ liệu đã được thêm vào Intent");
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Sai tên đăng nhập hoặc mật khẩu", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(LoginActivity.this, "Lỗi: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
-    }
-
-    // Hàm kiểm tra đăng nhập
-    public void checkLogin(String user, String pass) {
-        String query = "SELECT * FROM Login WHERE username = ? AND password = ?";
-
-        Log.d("DEBUG", "SQL Query: " + query); // Debug để kiểm tra truy vấn SQL
-        try (PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setString(1, user); // Gán giá trị cho tham số đầu tiên
-            stmt.setString(2, pass); // Gán giá trị cho tham số thứ hai
-
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    int roleId = rs.getInt("id_role");
-                    String role =  getRoleName(roleId);
-                    Toast.makeText(this, "Đăng nhập thành công! Chào mừng " + user, Toast.LENGTH_SHORT).show();
-                    Intent in = null;
-                    if("admin".equals(role)){
-                        in = new Intent(getApplicationContext(), AdminMain.class);
-                    } else if ("user".equals(role)) {
-                        in = new Intent(getApplicationContext(), UserMain.class);
-                    }
-                    startActivity(in);
-                } else {
-                    runOnUiThread(() -> Toast.makeText(this, "Tên đăng nhập hoặc mật khẩu không đúng!", Toast.LENGTH_SHORT).show());
-                }
-            }
-        } catch (SQLException e) {
-            Log.e("DEBUG", "SQL Error: " + e. getMessage(), e); // Ghi log lỗi SQL
-            Toast.makeText(this, "Lỗi kết nối: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-
-        }
-    }
-
-    // Hàm lấy tên vai trò từ id_role
-    private String getRoleName(int roleId) {
-        String role = "";
-        String query = "SELECT name_role FROM Role WHERE idrole = ?";
-        try (PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setInt(1, roleId); // Gán giá trị cho tham số
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    role = rs.getString("name_role");
-                }
-            }
-        } catch (SQLException e) {
-            Log.e("DEBUG", "Error fetching role name: " + e.getMessage(), e);
-        }
-        return role;
     }
 }

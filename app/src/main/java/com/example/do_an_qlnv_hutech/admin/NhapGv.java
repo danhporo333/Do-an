@@ -1,5 +1,6 @@
 package com.example.do_an_qlnv_hutech.admin;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,15 +12,10 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.do_an_qlnv_hutech.R;
 import com.example.do_an_qlnv_hutech.database.ConnectionDB;
-import com.example.do_an_qlnv_hutech.database.CustomAdapter;
 import com.example.do_an_qlnv_hutech.model.NhanVien;
 
 import java.sql.Connection;
@@ -33,7 +29,7 @@ public class NhapGv extends AppCompatActivity {
     EditText etHoTenGV, etSoDienThoai,etMonHoc,etLopHoc;
     RadioGroup rgGioiTinh;
     RadioButton rbNam,rbNu;
-    Button btnLuu;
+    Button btnLuu,btnShowall;
     Spinner spthu, spcahoc ,spmonhoc;
     ArrayList<String> arrayListThu, arrayListCaHoc, arrayListMonHoc;
     Connection conn; // Kết nối cơ sở dữ liệu
@@ -66,7 +62,7 @@ public class NhapGv extends AppCompatActivity {
             arrayListThu.add("Thứ " + i);
         }
 
-        // Nếu bạn sử dụng ArrayAdapter thay vì CustomAdapter
+        // Nếu bạn sử dụng ArrayAdapter thay vì CustomAdapterNV
         ArrayAdapter<String> adapterThu = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, arrayListThu);
         adapterThu.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spthu.setAdapter(adapterThu);
@@ -92,6 +88,7 @@ public class NhapGv extends AppCompatActivity {
         rbNam = findViewById(R.id.rbNam);
         rbNu = findViewById(R.id.rbNu);
         btnLuu = findViewById(R.id.btnLuu);
+        btnShowall = findViewById(R.id.btnShowall);
 
         rbNam.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,6 +122,7 @@ public class NhapGv extends AppCompatActivity {
             } else if ("Nữ".equalsIgnoreCase(gt)) {
                 rbNu.setChecked(true);
             }
+            Log.e("DATA1", "manv: " +nv.getManv());
         } else {
             Log.e("DATA_ERROR", "Không nhận được đối tượng NhanVien");
         }
@@ -138,39 +136,55 @@ public class NhapGv extends AppCompatActivity {
                 String lop = etLopHoc.getText().toString();
                 String thu = spthu.getSelectedItem().toString();
                 String CaHoc = spcahoc.getSelectedItem().toString();
-                String gt ="Nam";
+                String gt = "Nam";
+
                 if (rbNu.isChecked()) {
                     gt = "Nữ";
                 }
+
                 // Lấy tên môn học đã chọn
                 String monHocDaChon = spmonhoc.getSelectedItem().toString();
+
                 if (hovaten.isEmpty() || sodienthoai.isEmpty() || lop.isEmpty()) {
                     Toast.makeText(NhapGv.this, "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show();
                 } else {
                     try {
-                        // Lấy id của môn học từ tên môn học ở trong spinner
+                        // Lấy id của môn học từ tên môn học trong spinner
                         String getidmonhoc = "SELECT id FROM tb_MONHOC WHERE monhoc = ?";
                         PreparedStatement getIdStatement = conn.prepareStatement(getidmonhoc);
-                        getIdStatement.setString(1,monHocDaChon);
+                        getIdStatement.setString(1, monHocDaChon);
                         ResultSet rs = getIdStatement.executeQuery();
-                        if(rs.next()){
+
+                        if (rs.next()) {
                             int idMonHoc = rs.getInt("id");
 
-                            //thêm giữ liệu vào bảng nhập lịch
-                            String addquery = "INSERT INTO tb_NHAPLICH (Hovaten, GioiTinh, phone, Lop, thu, cahoc, id_monhoc) VALUES (?, ?, ?, ?, ?, ?, ?)";
-                            PreparedStatement st = conn.prepareStatement(addquery);
-                            st.setString(1, hovaten);
-                            st.setString(2, gt);
-                            st.setString(3, sodienthoai);
-                            st.setString(4, lop);
-                            st.setString(5, thu);
-                            st.setString(6, CaHoc);
-                            st.setInt(7, idMonHoc); // Gán id_monhoc vào khóa ngoại
-                            int ketqua = st.executeUpdate();
-                            if (ketqua > 0) {
-                                Toast.makeText(NhapGv.this, "Lưu thành công", Toast.LENGTH_SHORT).show();
+                            // Lấy id nhân viên từ tên nhân viên (hovaten)
+                            String getidNhanVien = "SELECT MANV FROM tb_NHANVIEN WHERE HOTEN = ?";
+                            PreparedStatement getNhanVienStatement = conn.prepareStatement(getidNhanVien);
+                            getNhanVienStatement.setString(1, hovaten);
+                            ResultSet rsNhanVien = getNhanVienStatement.executeQuery();
+
+                            if (rsNhanVien.next()) {
+                                int idNhanVien = rsNhanVien.getInt("MANV");
+
+                                // Thêm dữ liệu vào bảng Lịch Dạy
+                                String addquery = "INSERT INTO LichDay (id_nhanvien, id_monhoc, thu, cahoc, Lop, phone) VALUES (?, ?, ?, ?, ?, ?)";
+                                PreparedStatement st = conn.prepareStatement(addquery);
+                                st.setInt(1, idNhanVien); // Gán id_nhanvien vào khóa ngoại
+                                st.setInt(2, idMonHoc);   // Gán id_monhoc vào khóa ngoại
+                                st.setString(3, thu);
+                                st.setString(4, CaHoc);
+                                st.setString(5, lop);
+                                st.setString(6, sodienthoai);
+
+                                int ketqua = st.executeUpdate();
+                                if (ketqua > 0) {
+                                    Toast.makeText(NhapGv.this, "Lưu thành công", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(NhapGv.this, "Lưu thất bại", Toast.LENGTH_SHORT).show();
+                                }
                             } else {
-                                Toast.makeText(NhapGv.this, "Lưu thất bại", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(NhapGv.this, "Không tìm thấy nhân viên", Toast.LENGTH_SHORT).show();
                             }
                         } else {
                             Toast.makeText(NhapGv.this, "Không tìm thấy môn học", Toast.LENGTH_SHORT).show();
@@ -179,6 +193,22 @@ public class NhapGv extends AppCompatActivity {
                         e.printStackTrace(); // In lỗi ra logcat
                         Toast.makeText(NhapGv.this, "Lỗi: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
+                }
+            }
+        });
+
+
+        btnShowall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String hoten = etHoTenGV.getText().toString();
+                if(!hoten.isEmpty()){
+                    Intent intent = new Intent(getApplicationContext(), XuatLich.class);
+                    // Truyền dữ liệu vào Intent
+                    intent.putExtra("HOTEN", hoten);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Vui lòng nhập tên giáo viên", Toast.LENGTH_SHORT).show();
                 }
             }
         });

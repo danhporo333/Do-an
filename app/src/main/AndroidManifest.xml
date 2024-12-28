@@ -15,19 +15,25 @@
         android:theme="@style/Theme.Do_an_QLNV_HUTECH"
         tools:targetApi="31">
         <activity
+            android:name=".user.XuatLichUser"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ListViewLichDay"
+            android:exported="false" />
+        <activity
             android:name=".admin.AddGV"
             android:exported="false" />
         <activity
             android:name=".admin.NhapLich"
             android:exported="false" />
         <activity
-            android:name=".admin.XuatLichDetail"
+            android:name=".admin.XuatLich"
             android:exported="false" />
         <activity
             android:name=".admin.NhapGv"
             android:exported="false" />
         <activity
-            android:name=".database.CustomAdapter"
+            android:name=".database.CustomAdapterNV"
             android:exported="false" />
         <activity
             android:name=".admin.Listview"

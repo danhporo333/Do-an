@@ -1,7 +1,5 @@
 package com.example.do_an_qlnv_hutech.database;
 
-import static androidx.core.content.ContextCompat.startActivity;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -11,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,11 +21,11 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class CustomAdapter extends ArrayAdapter<NhanVien> {
+public class CustomAdapterNV extends ArrayAdapter<NhanVien> {
     private ArrayList<NhanVien> arrnv;
     private final Activity context;
     Connection conn;
-    public CustomAdapter(Activity context, ArrayList<NhanVien> arrnv) {
+    public CustomAdapterNV(Activity context, ArrayList<NhanVien> arrnv) {
         super(context, R.layout.list_item, arrnv);
         // TODO Auto-generated constructor stub
         this.context = context;
@@ -40,7 +37,6 @@ public class CustomAdapter extends ArrayAdapter<NhanVien> {
     public View getView(int position, View view, ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
         View rowView = inflater.inflate(R.layout.list_item, null, true);
-//        View rowView2 = inflater.inflate(R.layout.activity_listview, null, true);
         NhanVien nv = arrnv.get(position);
 
         Log.d("CUSTOM_ADAPTER1", "Hiển thị: " + nv.getHovaten() + ", " + nv.getGioitinh());
@@ -51,7 +47,7 @@ public class CustomAdapter extends ArrayAdapter<NhanVien> {
         // lấy tên và giới tính xuất ra listview
         txttennv.setText(nv.getHovaten());
         txtgioitinh.setText(nv.getGioitinh());
-        RelativeLayout relativeLayout  = rowView.findViewById(R.id.listNhanvien);
+
 
         rowView.setOnClickListener(new View.OnClickListener() {
             @Override

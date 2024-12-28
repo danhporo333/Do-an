@@ -1,0 +1,176 @@
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="12dp"
+    android:layout_marginEnd="12dp"
+    android:layout_marginVertical="10dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="8dp"
+    android:backgroundTint="@android:color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <!-- Thứ và ngày -->
+        <LinearLayout
+            android:id="@+id/thuNgayContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!-- Text: "Thứ 2," -->
+            <TextView
+                android:id="@+id/tvThu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thứ 2"
+                android:textColor="#FF0000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <!-- Text: "ngày 23/12" -->
+<!--            <TextView-->
+<!--                android:id="@+id/tvNgay"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="ngày 23/12"-->
+<!--                android:textColor="#FF0000"-->
+<!--                android:textSize="16sp"-->
+<!--                android:textStyle="bold"-->
+<!--                android:layout_marginStart="4dp" />-->
+        </LinearLayout>
+
+        <!-- Gạch dưới Thứ và ngày -->
+        <View
+            android:id="@+id/lineBelowThuNgay"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/thuNgayContainer"
+            android:layout_marginTop="4dp"
+            android:background="#CCCCCC" />
+
+        <!-- Tiết học -->
+        <LinearLayout
+            android:id="@+id/tietHocContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lineBelowThuNgay"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <!-- Text: "Tiết:" -->
+            <TextView
+                android:id="@+id/tvTietLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tiết:"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+
+            <!-- Text: "4-6" -->
+            <TextView
+                android:id="@+id/tvTietValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4-6"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginStart="4dp"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
+
+        <!-- Môn học -->
+        <LinearLayout
+            android:id="@+id/monHocContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tietHocContainer"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal">
+
+            <!-- Text: "Môn:" -->
+            <TextView
+                android:id="@+id/tvMonHocLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Môn:"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+
+            <!-- Text: "SKL121 - Thiết kế dự án" -->
+            <TextView
+                android:id="@+id/tvMonHocValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SKL121 - Thiết kế dự án"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginStart="4dp"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
+
+        <!-- Phòng học -->
+        <LinearLayout
+            android:id="@+id/phongHocContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/monHocContainer"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal">
+
+            <!-- Text: "Phòng:" -->
+            <TextView
+                android:id="@+id/tvPhongHocLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Phòng:"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+
+            <!-- Text: "B-14.03" -->
+            <TextView
+                android:id="@+id/tvPhongHocValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="B-14.03"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginStart="4dp"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
+
+        <!-- Lớp học -->
+        <LinearLayout
+            android:id="@+id/lopHocContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/phongHocContainer"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal">
+
+            <!-- Text: "Lớp:" -->
+            <TextView
+                android:id="@+id/tvLopHocLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lớp:"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+
+            <!-- Text: "CNTT-2023" -->
+            <TextView
+                android:id="@+id/tvLopHocValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CNTT-2023"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginStart="4dp"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

@@ -27,7 +27,7 @@ public class AddGV extends AppCompatActivity {
     Connection conn; // Kết nối cơ sở dữ liệu
     EditText etHoTenGV,etngaysinh,etSoDienThoai,etcancuoc,etdiachi;
     RadioButton rbNam,rbNu;
-    Button btnLuu;
+    Button btnLuu2;
 
 
     @Override
@@ -52,7 +52,7 @@ public class AddGV extends AppCompatActivity {
         etdiachi = findViewById(R.id.etdiachi);
         rbNam = findViewById(R.id.rbNam);
         rbNu = findViewById(R.id.rbNu);
-        btnLuu = findViewById(R.id.btnLuu);
+        btnLuu2 = findViewById(R.id.btnLuu2);
 
         rbNam.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,7 +69,7 @@ public class AddGV extends AppCompatActivity {
         });
 
         //nút lưu
-        btnLuu.setOnClickListener(new View.OnClickListener() {
+        btnLuu2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String hovaten = etHoTenGV.getText().toString();

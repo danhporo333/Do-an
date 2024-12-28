@@ -50,5 +50,4 @@
             android:textColor="@color/black"/>
     </RelativeLayout>
 
-
 </androidx.cardview.widget.CardView>

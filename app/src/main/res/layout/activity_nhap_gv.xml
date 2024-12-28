@@ -167,15 +167,35 @@
                 android:background="@drawable/rounded_background"
                 android:layout_height="wrap_content" />
 
-            <!-- Nút Lưu -->
-            <Button
-                android:id="@+id/btnLuu"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Lưu"
+                android:orientation="horizontal"
                 android:layout_marginTop="24dp"
-                android:backgroundTint="@color/design_default_color_primary"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/btnLuu"
+                    android:layout_width="172dp"
+                    android:layout_height="wrap_content"
+                    android:text="Lưu"
+                    android:padding="8dp"
+                    android:textSize="14sp"
+                    android:backgroundTint="@color/design_default_color_primary"
+                    android:textColor="@android:color/white" />
+
+                <Button
+                    android:id="@+id/btnShowall"
+                    android:layout_width="172dp"
+                    android:layout_height="wrap_content"
+                    android:text="Xem Tất Cả lịch"
+                    android:padding="8dp"
+                    android:textSize="14sp"
+                    android:layout_marginStart="16dp"
+                android:backgroundTint="@android:color/holo_red_dark"
                 android:textColor="@android:color/white" />
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
