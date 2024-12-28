@@ -54,22 +54,25 @@
                 android:id="@+id/listView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:divider="@android:color/darker_gray"
-                android:dividerHeight="1dp"
+                android:scrollbars="vertical"
+                android:layout_marginTop="12dp"
+                tools:listitem="@layout/list_item"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="10.0sp"
                 android:padding="8dp" />
         </FrameLayout>
     </LinearLayout>
 
     <!-- Drawer Menu -->
-    <com.google.android.material.navigation.NavigationView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/nav_view"
-        android:layout_gravity="start"
-        app:headerLayout="@layout/nav_header"
-        app:menu="@menu/nav_menu"
-        app:itemIconTint="@color/lavender"
-        app:itemTextColor="@color/lavender" />
+<!--    <com.google.android.material.navigation.NavigationView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:id="@+id/nav_view"-->
+<!--        android:layout_gravity="start"-->
+<!--        app:headerLayout="@layout/nav_header"-->
+<!--        app:menu="@menu/nav_menu"-->
+<!--        app:itemIconTint="@color/lavender"-->
+<!--        app:itemTextColor="@color/lavender" />-->
 
     <!-- Bottom Bar and FAB -->
     <androidx.coordinatorlayout.widget.CoordinatorLayout

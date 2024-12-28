@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +31,7 @@ import java.sql.Connection;
 public class AdminMain extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     Connection conn;
-    LinearLayout book;
+    LinearLayout book, lichday;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +40,10 @@ public class AdminMain extends AppCompatActivity {
         setContentView(R.layout.activity_adminmain);
 
         androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("Danh sách các sinh viên");
+        toolbar.setTitle("Danh sách các chức năng");
         setSupportActionBar(toolbar);
 
-
-        //kết nối database
+        // kết nối database
         ConnectionDB connectionDB = new ConnectionDB();
         conn = connectionDB.Conn();
 
@@ -53,6 +53,15 @@ public class AdminMain extends AppCompatActivity {
             public void onClick(View v) {
                 Intent in = new Intent(getApplicationContext(), Listview.class);
                 startActivity(in);
+            }
+        });
+
+        // lich day
+        lichday = findViewById(R.id.lichgiangday);
+        lichday.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 
@@ -73,8 +82,6 @@ public class AdminMain extends AppCompatActivity {
         });
     }
 
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -89,15 +96,15 @@ public class AdminMain extends AppCompatActivity {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.bottomsheetlayout);
 
-        //bắt sự kiện trong bottomsheet
+        // bắt sự kiện trong bottomsheet
         LinearLayout layoutVideo = dialog.findViewById(R.id.layoutVideo);
-        ImageView cancelButton  = dialog.findViewById(R.id.cancelButton);
+        ImageView cancelButton = dialog.findViewById(R.id.cancelButton);
 
         layoutVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                Toast.makeText(AdminMain.this,"ok",Toast.LENGTH_SHORT).show();
+                Toast.makeText(AdminMain.this, "ok", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -109,7 +116,7 @@ public class AdminMain extends AppCompatActivity {
         });
 
         dialog.show();
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.getWindow().setGravity(Gravity.BOTTOM);

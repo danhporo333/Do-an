@@ -1,11 +1,13 @@
 package com.example.do_an_qlnv_hutech.admin;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,22 +48,16 @@ public class Listview extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_listview);
 
-        //toolbar
+        // toolbar
         androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("Danh sách lịch giảng dạy");
+        toolbar.setTitle("Danh sách giảng viên");
         setSupportActionBar(toolbar);
 
         // Kết nối cơ sở dữ liệu
         ConnectionDB connectionDB = new ConnectionDB();
         conn = connectionDB.Conn();
 
-        if (conn == null) {
-            Log.e("DB_CONNECTION", "Kết nối cơ sở dữ liệu thất bại");
-        } else {
-            Log.d("DB_CONNECTION", "Kết nối cơ sở dữ liệu thành công");
-        }
-
-        //ánh xạ
+        // ánh xạ
         lvNhanVien = findViewById(R.id.listView);
         arrnv = new ArrayList<>();
         if (conn != null) {
@@ -88,23 +84,25 @@ public class Listview extends AppCompatActivity {
 
     }
 
-    private void showDataListView(){
-        if(conn != null){
-            String query = "SELECT HOTEN, GIOITINH FROM tb_NHANVIEN;";
-            try  {
+    private void showDataListView() {
+        if (conn != null) {
+            String query = "SELECT MANV, HOTEN, GIOITINH, DIENTHOAI FROM tb_NHANVIEN;";
+            try {
                 arrnv.clear();
                 // Thực hiện truy vấn
                 PreparedStatement stmt = conn.prepareStatement(query);
                 ResultSet rs = stmt.executeQuery();
                 int count = 0;
-                while (rs.next()){
+                while (rs.next()) {
                     count++;
+                    String manv = rs.getString("MANV");
                     String hovaten = rs.getString("hoten");
                     String gioitinh = rs.getString("GIOITINH");
-                    Log.d("DATA_FETCHED", "Họ tên: " + hovaten + ", Giới tính: " + gioitinh);
-                    arrnv.add(new NhanVien(hovaten,gioitinh));
+                    String dt = rs.getString("DIENTHOAI");
+                    Log.d("DATA_FETCHED", "mã nv: " + manv + ", Họ tên: " + hovaten + ", Giới tính: " + gioitinh
+                            + ", Giới tính: " + gioitinh);
+                    arrnv.add(new NhanVien(manv, hovaten, gioitinh, dt));
                 }
-//                adapter.notifyDataSetChanged();
                 // Chỉ gọi setAdapter khi có dữ liệu
                 if (arrnv.size() > 0) {
                     adapter = new CustomAdapter(this, arrnv);
@@ -130,8 +128,17 @@ public class Listview extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             drawerLayout.openDrawer(GravityCompat.START);
             return true;
+        } else if (item.getItemId() == R.id.add) {
+            Intent intent = new Intent(Listview.this, AddGV.class);
+            startActivityForResult(intent, 1); // Dùng requestCode là 1
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     private void showDialog() {
@@ -139,15 +146,15 @@ public class Listview extends AppCompatActivity {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.bottomsheetlayout);
 
-        //bắt sự kiện trong bottomsheet
+        // bắt sự kiện trong bottomsheet
         LinearLayout layoutVideo = dialog.findViewById(R.id.layoutVideo);
-        ImageView cancelButton  = dialog.findViewById(R.id.cancelButton);
+        ImageView cancelButton = dialog.findViewById(R.id.cancelButton);
 
         layoutVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                Toast.makeText(Listview.this,"ok",Toast.LENGTH_SHORT).show();
+                Toast.makeText(Listview.this, "ok", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -159,9 +166,20 @@ public class Listview extends AppCompatActivity {
         });
 
         dialog.show();
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.getWindow().setGravity(Gravity.BOTTOM);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            // Nhận dữ liệu giảng viên mới từ AddGV
+            showDataListView();
+        }
+    }
+
 }

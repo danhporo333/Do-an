@@ -31,10 +31,10 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:text="Họ và Tên Giảng Viên"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="8dp" />
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/etHoTenGV"
@@ -48,11 +48,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
                 android:text="Giới Tính"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp" />
+                android:textStyle="bold" />
 
             <RadioGroup
                 android:id="@+id/rgGioiTinh"
@@ -64,8 +64,8 @@
                     android:id="@+id/rbNam"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nam"
-                    android:checked="true" />
+                    android:checked="true"
+                    android:text="Nam" />
 
                 <RadioButton
                     android:id="@+id/rbNu"
@@ -75,106 +75,87 @@
             </RadioGroup>
 
 
-
             <!-- Nhập Số điện thoại -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Số Điện Thoại"
-                android:textSize="16sp"
-                android:textStyle="bold"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp" />
+                android:layout_marginBottom="8dp"
+                android:text="Ngày sinh"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/etSoDienThoai"
+                android:id="@+id/etngaysinh"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nhập số điện thoại"
                 android:background="@drawable/rounded_background"
-                android:inputType="phone" />
+                android:hint="ngày sinh"
+                android:inputType="date" />
 
             <!-- Nhập Môn học -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Môn Dạy"
-                android:textSize="16sp"
-                android:textStyle="bold"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp" />
+                android:layout_marginBottom="8dp"
+                android:text="số điện thoại"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-<!--            <EditText-->
-<!--                android:id="@+id/etMonHoc"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:hint="Nhập môn học"-->
-<!--                android:background="@drawable/rounded_background"-->
-<!--                android:inputType="text" />-->
-            <Spinner
-                android:id="@+id/spinnermonhoc"
+
+            <EditText
+                android:id="@+id/etSoDienThoai"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/rounded_background"
-                android:layout_height="wrap_content" />
+                android:hint="Nhập số điện thoại"
+                android:inputType="phone" />
 
             <!-- Nhập Lớp học -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Lớp Dạy"
-                android:textSize="16sp"
-                android:textStyle="bold"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp" />
+                android:layout_marginBottom="8dp"
+                android:text="Căn cước công dân"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/etLopHoc"
+                android:id="@+id/etcancuoc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_background"
-                android:hint="Nhập lớp học"
+                android:hint="Nhập số căn cước"
                 android:inputType="text" />
 
             <!-- Chọn Thứ -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Ngày trong tuần"
-                android:textSize="16sp"
-                android:textStyle="bold"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp" />
+                android:layout_marginBottom="8dp"
+                android:text="Địa chỉ"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-            <Spinner
-                android:id="@+id/spinnerThu"
-                android:layout_width="match_parent"
-                android:background="@drawable/rounded_background"
-                android:layout_height="wrap_content" />
-
-            <!-- Chọn ca học -->
-            <TextView
+            <EditText
+                android:id="@+id/etdiachi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Chọn ca dạy"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp" />
-
-            <Spinner
-                android:id="@+id/spinnercahoc"
-                android:layout_width="match_parent"
                 android:background="@drawable/rounded_background"
-                android:layout_height="wrap_content" />
+                android:hint="Nhập Địa chỉ"
+                android:inputType="text" />
 
             <!-- Nút Lưu -->
             <Button
                 android:id="@+id/btnLuu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Lưu"
                 android:layout_marginTop="24dp"
                 android:backgroundTint="@color/design_default_color_primary"
+                android:text="Lưu"
                 android:textColor="@android:color/white" />
         </LinearLayout>
     </ScrollView>

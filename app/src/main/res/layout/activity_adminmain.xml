@@ -76,7 +76,7 @@
                                 android:textColor="@color/black" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
-
+                        <!--       layout thu 2             -->
                     <androidx.cardview.widget.CardView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -86,6 +86,7 @@
                         android:layout_columnWeight="1">
 
                         <LinearLayout
+                            android:id="@+id/lichgiangday"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center"

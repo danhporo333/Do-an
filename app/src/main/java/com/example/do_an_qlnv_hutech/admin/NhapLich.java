@@ -19,8 +19,6 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.do_an_qlnv_hutech.R;
 import com.example.do_an_qlnv_hutech.database.ConnectionDB;
-import com.example.do_an_qlnv_hutech.database.CustomAdapter;
-import com.example.do_an_qlnv_hutech.model.NhanVien;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,11 +27,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class NhapGv extends AppCompatActivity {
+public class NhapLich extends AppCompatActivity {
+
     EditText etHoTenGV, etSoDienThoai,etMonHoc,etLopHoc;
-    RadioGroup rgGioiTinh;
     RadioButton rbNam,rbNu;
-    Button btnLuu;
+    Button btnLuu, btnShowall;
     Spinner spthu, spcahoc ,spmonhoc;
     ArrayList<String> arrayListThu, arrayListCaHoc, arrayListMonHoc;
     Connection conn; // Kết nối cơ sở dữ liệu
@@ -41,7 +39,8 @@ public class NhapGv extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_nhap_gv);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_nhap_lich);
 
         androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Quản lý Giảng viên");
@@ -91,7 +90,8 @@ public class NhapGv extends AppCompatActivity {
         etLopHoc = findViewById(R.id.etLopHoc);
         rbNam = findViewById(R.id.rbNam);
         rbNu = findViewById(R.id.rbNu);
-        btnLuu = findViewById(R.id.btnLuu);
+//        btnLuu = findViewById(R.id.btnLuu);
+//        btnShowall = findViewById(R.id.btnShowall);
 
         rbNam.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,28 +106,6 @@ public class NhapGv extends AppCompatActivity {
 
             }
         });
-
-        NhanVien nv = (NhanVien) getIntent().getSerializableExtra("Object");
-        if (nv != null) {
-
-            String hoten = nv.getHovaten();
-            String gt = nv.getGioitinh();
-            String phone = nv.getPhone(); // Đảm bảo phone được khởi tạo trong NhanVien
-
-            etHoTenGV.setText(hoten);
-
-            // Gán giá trị phone vào EditText
-            etSoDienThoai.setText(phone);
-
-            // Gán giá trị giới tính
-            if ("Nam".equalsIgnoreCase(gt)) {
-                rbNam.setChecked(true);
-            } else if ("Nữ".equalsIgnoreCase(gt)) {
-                rbNu.setChecked(true);
-            }
-        } else {
-            Log.e("DATA_ERROR", "Không nhận được đối tượng NhanVien");
-        }
 
         //nút lưu
         btnLuu.setOnClickListener(new View.OnClickListener() {
@@ -145,7 +123,7 @@ public class NhapGv extends AppCompatActivity {
                 // Lấy tên môn học đã chọn
                 String monHocDaChon = spmonhoc.getSelectedItem().toString();
                 if (hovaten.isEmpty() || sodienthoai.isEmpty() || lop.isEmpty()) {
-                    Toast.makeText(NhapGv.this, "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NhapLich.this, "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show();
                 } else {
                     try {
                         // Lấy id của môn học từ tên môn học ở trong spinner
@@ -168,16 +146,16 @@ public class NhapGv extends AppCompatActivity {
                             st.setInt(7, idMonHoc); // Gán id_monhoc vào khóa ngoại
                             int ketqua = st.executeUpdate();
                             if (ketqua > 0) {
-                                Toast.makeText(NhapGv.this, "Lưu thành công", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(NhapLich.this, "Lưu thành công", Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(NhapGv.this, "Lưu thất bại", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(NhapLich.this, "Lưu thất bại", Toast.LENGTH_SHORT).show();
                             }
                         } else {
-                            Toast.makeText(NhapGv.this, "Không tìm thấy môn học", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(NhapLich.this, "Không tìm thấy môn học", Toast.LENGTH_SHORT).show();
                         }
                     } catch (Exception e) {
                         e.printStackTrace(); // In lỗi ra logcat
-                        Toast.makeText(NhapGv.this, "Lỗi: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(NhapLich.this, "Lỗi: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
             }

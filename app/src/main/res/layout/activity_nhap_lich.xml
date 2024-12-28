@@ -74,8 +74,6 @@
                     android:text="Nữ" />
             </RadioGroup>
 
-
-
             <!-- Nhập Số điện thoại -->
             <TextView
                 android:layout_width="match_parent"
@@ -98,19 +96,19 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Môn Dạy"
+                android:text="Môn Học"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="8dp" />
 
-<!--            <EditText-->
-<!--                android:id="@+id/etMonHoc"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:hint="Nhập môn học"-->
-<!--                android:background="@drawable/rounded_background"-->
-<!--                android:inputType="text" />-->
+            <!--            <EditText-->
+            <!--                android:id="@+id/etMonHoc"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:hint="Nhập môn học"-->
+            <!--                android:background="@drawable/rounded_background"-->
+            <!--                android:inputType="text" />-->
             <Spinner
                 android:id="@+id/spinnermonhoc"
                 android:layout_width="match_parent"
@@ -121,7 +119,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Lớp Dạy"
+                android:text="Lớp Học"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_marginTop="16dp"
@@ -139,7 +137,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Ngày trong tuần"
+                android:text="Chọn Thứ"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_marginTop="16dp"
@@ -155,7 +153,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Chọn ca dạy"
+                android:text="Chọn ca học"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_marginTop="16dp"

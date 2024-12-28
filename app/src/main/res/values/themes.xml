@@ -29,5 +29,11 @@
         <item name="cornerSize">50%</item>
     </style>
 
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:fitsSystemWindows">true</item>
+    </style>
+
+
     <style name="Theme.Do_an_QLNV_HUTECH" parent="Base.Theme.Do_an_QLNV_HUTECH" />
 </resources>

@@ -7,17 +7,32 @@ public class NhanVien implements Serializable {
     private String hovaten;
     private String gioitinh;
     private int namsinh;
+    private String phone;
 
-    public NhanVien(String hovaten, String gioitinh) {
-        this.hovaten = hovaten;
-        this.gioitinh = gioitinh;
-    }
 
-    public NhanVien(String manv, String hovaten, String gioitinh, int namsinh) {
+
+    public NhanVien(String manv, String hovaten, String gioitinh, String phone) {
         this.manv = manv;
         this.hovaten = hovaten;
         this.gioitinh = gioitinh;
-        this.namsinh = namsinh;
+        this.phone = phone;
+    }
+
+//    public NhanVien(String manv, String hovaten, String gioitinh, int namsinh, int phone) {
+//        this.manv = manv;
+//        this.hovaten = hovaten;
+//        this.gioitinh = gioitinh;
+//        this.namsinh = namsinh;
+//        this.phone = phone;
+//    }
+
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getManv() {
