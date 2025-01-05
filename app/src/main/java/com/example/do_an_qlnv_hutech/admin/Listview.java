@@ -2,9 +2,14 @@ package com.example.do_an_qlnv_hutech.admin;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -12,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -40,6 +46,7 @@ public class Listview extends AppCompatActivity {
     ListView lvNhanVien;
     ArrayList<NhanVien> arrnv;
     CustomAdapterNV adapter;
+    EditText edtsearch;
     Connection conn; // Kết nối cơ sở dữ liệu
 
     @Override
@@ -59,12 +66,33 @@ public class Listview extends AppCompatActivity {
 
         // ánh xạ
         lvNhanVien = findViewById(R.id.listView);
+        edtsearch = findViewById(R.id.edtsearch);
         arrnv = new ArrayList<>();
         if (conn != null) {
-            showDataListView();
+            showDataListView("");
         } else {
             Log.e("DB_CONNECTION", "Kết nối cơ sở dữ liệu thất bại");
         }
+
+        // Thêm TextWatcher để thực hiện tìm kiếm khi người dùng nhập dữ liệu
+        edtsearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                // Gọi hàm tìm kiếm mỗi khi có thay đổi trong edtsearch
+                String query = charSequence.toString();
+                showDataListView(query);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
         // Thiết lập DrawerLayout và NavigationView
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -84,13 +112,25 @@ public class Listview extends AppCompatActivity {
 
     }
 
-    private void showDataListView() {
+    private void showDataListView(String searchQuery) {
         if (conn != null) {
-            String query = "SELECT MANV, HOTEN, GIOITINH, DIENTHOAI FROM tb_NHANVIEN;";
+            String query;
+            // Nếu có từ khóa tìm kiếm, truy vấn sẽ lọc theo tên hoặc mã giảng viên
+            if (!searchQuery.isEmpty()) {
+                query = "SELECT MANV, HOTEN, GIOITINH, DIENTHOAI ,HINHANH FROM tb_NHANVIEN WHERE HOTEN LIKE ? OR MANV LIKE ?;";
+            } else {
+                query = "SELECT MANV, HOTEN, GIOITINH, DIENTHOAI ,HINHANH FROM tb_NHANVIEN;";
+            }
+
             try {
                 arrnv.clear();
                 // Thực hiện truy vấn
                 PreparedStatement stmt = conn.prepareStatement(query);
+                // Nếu có từ khóa tìm kiếm, thêm vào tham số tìm kiếm cho PreparedStatement
+                if (!searchQuery.isEmpty()) {
+                    stmt.setString(1, "%" + searchQuery + "%");
+                    stmt.setString(2, "%" + searchQuery + "%");
+                }
                 ResultSet rs = stmt.executeQuery();
                 int count = 0;
                 while (rs.next()) {
@@ -99,9 +139,16 @@ public class Listview extends AppCompatActivity {
                     String hovaten = rs.getString("hoten");
                     String gioitinh = rs.getString("GIOITINH");
                     String dt = rs.getString("DIENTHOAI");
+                    String anhnv = rs.getString("HINHANH");
                     Log.d("DATA_FETCHED", "mã nv: " + manv + ", Họ tên: " + hovaten + ", Giới tính: " + gioitinh
-                            + ", Giới tính: " + gioitinh);
-                    arrnv.add(new NhanVien(manv, hovaten, gioitinh, dt));
+                            + ", Giới tính: " + gioitinh + ", Giới tính: " + anhnv);
+                    // Chuyển ảnh (nếu có) từ Base64 (nếu ảnh là chuỗi Base64)
+                    Bitmap bitmap = null;
+                    if (anhnv != null && !anhnv.isEmpty()) {
+                        byte[] decodedString = Base64.decode(anhnv, Base64.DEFAULT);
+                        bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                    }
+                    arrnv.add(new NhanVien(manv, hovaten, gioitinh, dt, anhnv));
                 }
                 // Chỉ gọi setAdapter khi có dữ liệu
                 if (arrnv.size() > 0) {
@@ -122,6 +169,7 @@ public class Listview extends AppCompatActivity {
             Toast.makeText(this, "Không thể kết nối cơ sở dữ liệu", Toast.LENGTH_SHORT).show();
         }
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -178,7 +226,7 @@ public class Listview extends AppCompatActivity {
 
         if (requestCode == 1 && resultCode == RESULT_OK) {
             // Nhận dữ liệu giảng viên mới từ AddGV
-            showDataListView();
+            showDataListView("");
         }
     }
 

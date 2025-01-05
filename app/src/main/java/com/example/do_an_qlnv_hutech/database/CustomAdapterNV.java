@@ -4,11 +4,15 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,10 +48,11 @@ public class CustomAdapterNV extends ArrayAdapter<NhanVien> {
         //ánh xạ
         TextView txttennv = rowView.findViewById(R.id.txttennv);
         TextView txtgioitinh = rowView.findViewById(R.id.txtgioitinh);
+        ImageView imgnv = (ImageView) rowView.findViewById(R.id.imgnv);
         // lấy tên và giới tính xuất ra listview
         txttennv.setText(nv.getHovaten());
         txtgioitinh.setText(nv.getGioitinh());
-
+        imgnv.setImageBitmap(StringToBitMap(nv.getAnhsnv()));
 
         rowView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,5 +131,16 @@ public class CustomAdapterNV extends ArrayAdapter<NhanVien> {
         });
 
         return rowView;
+    }
+
+    public Bitmap StringToBitMap(String encodedString){
+        try {
+            byte [] encodeByte= Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch(Exception e) {
+            e.getMessage();
+            return null;
+        }
     }
 }

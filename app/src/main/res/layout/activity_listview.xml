@@ -33,9 +33,7 @@
             android:iconifiedByDefault="false"
             android:hint="Nhập giá trị tìm kiếm"
             android:inputType="text"
-            android:padding="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:padding="8dp" />
 
         <!-- Main Content -->
         <FrameLayout
@@ -50,10 +48,11 @@
                 android:padding="16dp">
             </ScrollView>
 
+            <!-- ListView moved out of FrameLayout -->
             <ListView
                 android:id="@+id/listView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="720dp"
                 android:scrollbars="vertical"
                 android:layout_marginTop="12dp"
                 tools:listitem="@layout/list_item"
@@ -61,18 +60,19 @@
                 android:dividerHeight="10.0sp"
                 android:padding="8dp" />
         </FrameLayout>
+
     </LinearLayout>
 
-    <!-- Drawer Menu -->
-<!--    <com.google.android.material.navigation.NavigationView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:id="@+id/nav_view"-->
-<!--        android:layout_gravity="start"-->
-<!--        app:headerLayout="@layout/nav_header"-->
-<!--        app:menu="@menu/nav_menu"-->
-<!--        app:itemIconTint="@color/lavender"-->
-<!--        app:itemTextColor="@color/lavender" />-->
+    <!-- Drawer Menu (commented out for now) -->
+    <!-- <com.google.android.material.navigation.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/nav_view"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/nav_menu"
+        app:itemIconTint="@color/lavender"
+        app:itemTextColor="@color/lavender" /> -->
 
     <!-- Bottom Bar and FAB -->
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -111,5 +111,4 @@
             app:maxImageSize="40dp"
             app:tint="@color/lavender" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -16,10 +16,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.google.android.material.imageview.ShapeableImageView
+        <ImageView
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:id="@+id/listImage"
+            android:id="@+id/imgnv"
             android:src="@drawable/book"
             android:scaleType="centerCrop"
             android:layout_marginStart="10dp"
@@ -31,22 +31,22 @@
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:id="@+id/txttennv"
-            android:text="Đồ Ăn "
+            android:text="tên nhân vin "
             android:textColor="@color/black"
             android:textSize="20sp"
             android:layout_marginTop="25dp"
             android:layout_marginStart="30dp"
-            android:layout_toEndOf="@id/listImage" />
+            android:layout_toEndOf="@id/imgnv" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:id="@+id/txtgioitinh"
-            android:text="giá cả"
+            android:text="Giới tính"
             android:textSize="16sp"
             android:layout_toEndOf="@id/txttennv"
             android:layout_marginTop="25dp"
-            android:layout_marginStart="100dp"
+            android:layout_marginStart="80dp"
             android:textColor="@color/black"/>
     </RelativeLayout>
 

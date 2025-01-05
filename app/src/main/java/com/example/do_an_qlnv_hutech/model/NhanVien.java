@@ -8,24 +8,25 @@ public class NhanVien implements Serializable {
     private String gioitinh;
     private int namsinh;
     private String phone;
+    private String anhsnv;
 
 
 
-    public NhanVien(String manv, String hovaten, String gioitinh, String phone) {
+    public NhanVien(String manv, String hovaten, String gioitinh, String phone, String anhsnv) {
         this.manv = manv;
         this.hovaten = hovaten;
         this.gioitinh = gioitinh;
         this.phone = phone;
+        this.anhsnv = anhsnv;
     }
 
-//    public NhanVien(String manv, String hovaten, String gioitinh, int namsinh, int phone) {
-//        this.manv = manv;
-//        this.hovaten = hovaten;
-//        this.gioitinh = gioitinh;
-//        this.namsinh = namsinh;
-//        this.phone = phone;
-//    }
+    public String getAnhsnv() {
+        return anhsnv;
+    }
 
+    public void setAnhsnv(String anhsnv) {
+        this.anhsnv = anhsnv;
+    }
 
     public String getPhone() {
         return phone;
