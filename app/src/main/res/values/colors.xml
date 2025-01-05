@@ -10,4 +10,6 @@
     <color name="purple">#8692f7</color>
     <color name="lavender">#8692f7</color>
     <color name="colorPrimaryDark">#202F65</color>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorAccent">#FF4081</color>
 </resources>

@@ -1,8 +1,12 @@
 package com.example.do_an_qlnv_hutech.user;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -29,6 +33,7 @@ public class XuatLichUser extends AppCompatActivity {
     AdapterLich adapterLich;
     Connection conn; // Kết nối cơ sở dữ liệu
     ListView lvlichUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +44,10 @@ public class XuatLichUser extends AppCompatActivity {
         toolbar.setTitle("Thời khóa biểu");
         setSupportActionBar(toolbar);
 
+        // Kiểm tra vai trò người dùng từ SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("userPrefs", MODE_PRIVATE);
+        int id_role = sharedPreferences.getInt("id_role", 2);  // Mặc định là 2 (user) nếu không tìm thấy id_role
+        Log.d("Role", "Vai trò người dùng: " + id_role);
         // Kết nối cơ sở dữ liệu
         ConnectionDB connectionDB = new ConnectionDB();
         conn = connectionDB.Conn();
@@ -48,10 +57,7 @@ public class XuatLichUser extends AppCompatActivity {
 
         Intent intent = getIntent();
         int idNhanVien = intent.getIntExtra("id_nhanvien", -1); // Kiểm tra giá trị id_nhanvien
-        int idRole = intent.getIntExtra("id_role", -1); // Kiểm tra giá trị id_role
-
         Log.d("DEBUG_XUATLICH", "ID Nhân viên: " + idNhanVien); // Log id_nhanvien
-        Log.d("DEBUG_XUATLICH", "ID Vai trò: " + idRole); // Log id_role
 
         try {
             // Truy vấn lịch dạy của nhân viên
@@ -72,14 +78,14 @@ public class XuatLichUser extends AppCompatActivity {
                 arrlich.add(new LichGV(thu, cahoc, lop, monhoc));
             }
 
-            // Tạo adapter và gắn vào ListView
-            adapterLich = new AdapterLich(this, arrlich);
+            // Tạo adapter và gắn vào ListView, truyền role vào AdapterLich
+            adapterLich = new AdapterLich(this, arrlich, id_role == 1); // Chuyển role vào
+
             lvlichUser.setAdapter(adapterLich);
 
         } catch (SQLException e) {
             e.printStackTrace();
             Toast.makeText(this, "Lỗi: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
-
     }
 }

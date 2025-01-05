@@ -1,8 +1,11 @@
 package com.example.do_an_qlnv_hutech.admin;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -39,21 +42,25 @@ public class XuatLich extends AppCompatActivity {
         ConnectionDB connectionDB = new ConnectionDB();
         conn = connectionDB.Conn();
 
-        //ánh xạ
+        // ánh xạ
         listViewlich = findViewById(R.id.listViewlich);
         arrlich = new ArrayList<>();
 
+        // Kiểm tra vai trò người dùng từ SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("userPrefs", MODE_PRIVATE);
+        int id_role = sharedPreferences.getInt("id_role", 2); // Mặc định là user nếu không có giá trị
+        Log.d("Role", "Vai trò người dùng: " + id_role);  // Kiểm tra giá trị role
         // Nhận dữ liệu từ Intent
         Intent intent = getIntent();
         String hovaten = intent.getStringExtra("HOTEN");
         Log.d("XuatLich", "Tên giáo viên nhận từ Intent: " + hovaten);
 
         if (hovaten != null && !hovaten.isEmpty()) {
-            showLichDay(hovaten);
+            showLichDay(hovaten, id_role == 1); // Truyền role vào adapter
         }
     }
 
-    private void showLichDay(String hovaten) {
+    private void showLichDay(String hovaten, boolean isAdmin) {
         try {
             // Tạo câu truy vấn lấy lịch dạy theo tên giáo viên
             String query = "SELECT LichDay.*, tb_MONHOC.monhoc, LichDay.Lop " +
@@ -67,7 +74,6 @@ public class XuatLich extends AppCompatActivity {
             ResultSet rs = ps.executeQuery();
 
             // Xử lý kết quả và hiển thị lịch dạy
-
             while (rs.next()) {
                 String thu = rs.getString("thu");
                 String cahoc = rs.getString("cahoc");
@@ -76,8 +82,8 @@ public class XuatLich extends AppCompatActivity {
                 Log.d("LichDay", "Môn học: " + monhoc + ", Lớp: " + lop + ", Thứ: " + thu + ", Ca học: " + cahoc);
                 arrlich.add(new LichGV(thu, cahoc, lop, monhoc));
             }
-            // Sử dụng AdapterLich để hiển thị dữ liệu
-            adapterLich = new AdapterLich(this, arrlich);
+            // Tạo AdapterLich với vai trò của người dùng và gán vào ListView
+            adapterLich = new AdapterLich(this, arrlich, isAdmin); // Truyền role vào Adapter
             listViewlich.setAdapter(adapterLich);
         } catch (Exception e) {
             e.printStackTrace();

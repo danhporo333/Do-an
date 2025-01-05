@@ -68,6 +68,13 @@ public class LoginActivity extends AppCompatActivity {
                         int idNhanVien = rs.getInt("id_nhanvien");
                         int idRole = rs.getInt("id_role");
                         Log.d("DEBUG_LOGIN", "id_nhanvien: " + idNhanVien + ", id_role: " + idRole);
+
+                        SharedPreferences sharedPreferences = getSharedPreferences("userPrefs", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putInt("id_role", idRole);  // Lưu giá trị role của người dùng
+                        editor.putInt("id_nhanvien", idNhanVien);  // Lưu thông tin nhân viên
+                        editor.apply();  // Lưu thay đổi
+
                         Intent intent;
                         // Điều hướng dựa trên vai trò
                         if (idRole == 1) { // 1 = Admin
