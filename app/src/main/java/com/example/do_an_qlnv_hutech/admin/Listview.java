@@ -1,5 +1,7 @@
 package com.example.do_an_qlnv_hutech.admin;
 
+import static com.example.do_an_qlnv_hutech.R.*;
+
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;

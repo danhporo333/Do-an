@@ -27,72 +27,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Nhập họ và tên -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Họ và Tên Giảng Viên"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="8dp" />
-
-            <EditText
-                android:id="@+id/etHoTenGV"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/rounded_background"
-                android:hint="Nhập họ và tên"
-                android:inputType="textPersonName" />
-
-            <!-- Nhập Giới tính -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Giới Tính"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp" />
-
-            <RadioGroup
-                android:id="@+id/rgGioiTinh"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/rbNam"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Nam"
-                    android:checked="true" />
-
-                <RadioButton
-                    android:id="@+id/rbNu"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Nữ" />
-            </RadioGroup>
-
-
-
-            <!-- Nhập Số điện thoại -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Số Điện Thoại"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp" />
-
-            <EditText
-                android:id="@+id/etSoDienThoai"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Nhập số điện thoại"
-                android:background="@drawable/rounded_background"
-                android:inputType="phone" />
 
             <!-- Nhập Môn học -->
             <TextView
@@ -105,7 +39,7 @@
                 android:layout_marginBottom="8dp" />
 
             <Spinner
-                android:id="@+id/spinnermonhoc"
+                android:id="@+id/spMonHoc"
                 android:layout_width="match_parent"
                 android:background="@drawable/rounded_background"
                 android:layout_height="wrap_content" />
@@ -121,7 +55,7 @@
                 android:layout_marginBottom="8dp" />
 
             <EditText
-                android:id="@+id/etLopHoc"
+                android:id="@+id/etclass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_background"
@@ -139,7 +73,7 @@
                 android:layout_marginBottom="8dp" />
 
             <EditText
-                android:id="@+id/etPhongDay"
+                android:id="@+id/etphongday"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_background"
@@ -157,7 +91,7 @@
                 android:layout_marginBottom="8dp" />
 
             <Spinner
-                android:id="@+id/spinnerThu"
+                android:id="@+id/spthu"
                 android:layout_width="match_parent"
                 android:background="@drawable/rounded_background"
                 android:layout_height="wrap_content" />
@@ -173,7 +107,7 @@
                 android:layout_marginBottom="8dp" />
 
             <Spinner
-                android:id="@+id/spinnercahoc"
+                android:id="@+id/spCaHoc"
                 android:layout_width="match_parent"
                 android:background="@drawable/rounded_background"
                 android:layout_height="wrap_content" />
@@ -186,25 +120,16 @@
                 android:gravity="center">
 
                 <Button
-                    android:id="@+id/btnLuu"
+                    android:id="@+id/btnupdate"
                     android:layout_width="172dp"
                     android:layout_height="wrap_content"
-                    android:text="Lưu"
+                    android:text="Cập nhật"
                     android:padding="8dp"
                     android:textSize="14sp"
                     android:backgroundTint="@color/design_default_color_primary"
                     android:textColor="@android:color/white" />
 
-                <Button
-                    android:id="@+id/btnShowall"
-                    android:layout_width="172dp"
-                    android:layout_height="wrap_content"
-                    android:text="Xem Tất Cả lịch"
-                    android:padding="8dp"
-                    android:textSize="14sp"
-                    android:layout_marginStart="16dp"
-                android:backgroundTint="@android:color/holo_red_dark"
-                android:textColor="@android:color/white" />
+
             </LinearLayout>
 
         </LinearLayout>

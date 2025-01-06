@@ -70,12 +70,14 @@ public class XuatLichUser extends AppCompatActivity {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
+                String id = rs.getString("id");
                 String thu = rs.getString("thu");
                 String cahoc = rs.getString("cahoc");
                 String monhoc = rs.getString("monhoc");
                 String lop = rs.getString("Lop");
-                Log.d("LichDayuser", "Môn học: " + monhoc + ", Lớp: " + lop + ", Thứ: " + thu + ", Ca học: " + cahoc);
-                arrlich.add(new LichGV(thu, cahoc, lop, monhoc));
+                String phong = rs.getString("phong_hoc");
+                Log.d("LichDay", "Môn học: " + monhoc + ", Lớp: " + lop + ", Thứ: " + thu + ", Ca học: " + cahoc + ", phòng học: " + phong);
+                arrlich.add(new LichGV(id,thu, cahoc, lop, monhoc,phong));
             }
 
             // Tạo adapter và gắn vào ListView, truyền role vào AdapterLich

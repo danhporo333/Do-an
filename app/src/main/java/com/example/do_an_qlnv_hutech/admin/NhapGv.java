@@ -3,6 +3,7 @@ package com.example.do_an_qlnv_hutech.admin;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -16,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.do_an_qlnv_hutech.R;
 import com.example.do_an_qlnv_hutech.database.ConnectionDB;
+import com.example.do_an_qlnv_hutech.model.LichGV;
 import com.example.do_an_qlnv_hutech.model.NhanVien;
 
 import java.sql.Connection;
@@ -26,8 +28,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class NhapGv extends AppCompatActivity {
-    EditText etHoTenGV, etSoDienThoai,etMonHoc,etLopHoc;
-    RadioGroup rgGioiTinh;
+    EditText etHoTenGV, etSoDienThoai,etMonHoc,etLopHoc,etPhongDay;
     RadioButton rbNam,rbNu;
     Button btnLuu,btnShowall;
     Spinner spthu, spcahoc ,spmonhoc;
@@ -42,6 +43,10 @@ public class NhapGv extends AppCompatActivity {
         androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Quản lý Giảng viên");
         setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
 
         // Kết nối cơ sở dữ liệu
         ConnectionDB connectionDB = new ConnectionDB();
@@ -85,6 +90,7 @@ public class NhapGv extends AppCompatActivity {
         etHoTenGV = findViewById(R.id.etHoTenGV);
         etSoDienThoai =findViewById(R.id.etSoDienThoai);
         etLopHoc = findViewById(R.id.etLopHoc);
+        etPhongDay = findViewById(R.id.etPhongDay);
         rbNam = findViewById(R.id.rbNam);
         rbNu = findViewById(R.id.rbNu);
         btnLuu = findViewById(R.id.btnLuu);
@@ -104,18 +110,14 @@ public class NhapGv extends AppCompatActivity {
             }
         });
 
+        // nhận ve thong tin giang vien
         NhanVien nv = (NhanVien) getIntent().getSerializableExtra("Object");
         if (nv != null) {
-
             String hoten = nv.getHovaten();
             String gt = nv.getGioitinh();
-            String phone = nv.getPhone(); // Đảm bảo phone được khởi tạo trong NhanVien
-
+            String phone = nv.getPhone();
             etHoTenGV.setText(hoten);
-
-            // Gán giá trị phone vào EditText
             etSoDienThoai.setText(phone);
-
             // Gán giá trị giới tính
             if ("Nam".equalsIgnoreCase(gt)) {
                 rbNam.setChecked(true);
@@ -127,6 +129,7 @@ public class NhapGv extends AppCompatActivity {
             Log.e("DATA_ERROR", "Không nhận được đối tượng NhanVien");
         }
 
+
         //nút lưu
         btnLuu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,6 +139,7 @@ public class NhapGv extends AppCompatActivity {
                 String lop = etLopHoc.getText().toString();
                 String thu = spthu.getSelectedItem().toString();
                 String CaHoc = spcahoc.getSelectedItem().toString();
+                String phong = etPhongDay.getText().toString();
                 String gt = "Nam";
 
                 if (rbNu.isChecked()) {
@@ -168,7 +172,7 @@ public class NhapGv extends AppCompatActivity {
                                 int idNhanVien = rsNhanVien.getInt("MANV");
 
                                 // Thêm dữ liệu vào bảng Lịch Dạy
-                                String addquery = "INSERT INTO LichDay (id_nhanvien, id_monhoc, thu, cahoc, Lop, phone) VALUES (?, ?, ?, ?, ?, ?)";
+                                String addquery = "INSERT INTO LichDay (id_nhanvien, id_monhoc, thu, cahoc, Lop, phone, phong_hoc) VALUES (?, ?, ?, ?, ?, ?, ?)";
                                 PreparedStatement st = conn.prepareStatement(addquery);
                                 st.setInt(1, idNhanVien); // Gán id_nhanvien vào khóa ngoại
                                 st.setInt(2, idMonHoc);   // Gán id_monhoc vào khóa ngoại
@@ -176,6 +180,7 @@ public class NhapGv extends AppCompatActivity {
                                 st.setString(4, CaHoc);
                                 st.setString(5, lop);
                                 st.setString(6, sodienthoai);
+                                st.setString(7,phong);
 
                                 int ketqua = st.executeUpdate();
                                 if (ketqua > 0) {
@@ -202,16 +207,28 @@ public class NhapGv extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String hoten = etHoTenGV.getText().toString();
+                String phone = etSoDienThoai.getText().toString();
                 if(!hoten.isEmpty()){
                     Intent intent = new Intent(getApplicationContext(), XuatLich.class);
                     // Truyền dữ liệu vào Intent
                     intent.putExtra("HOTEN", hoten);
-                    startActivity(intent);
+                    intent.putExtra("DIENTHOAI", phone);
+                    // Gọi XuatLich và đợi kết quả trả lại
+                    startActivityForResult(intent, 1);
+                    Log.d("XuatLich1", "Tên giáo viên nhận từ Intent: " + hoten + ", phone: " + phone);
                 } else {
                     Toast.makeText(getApplicationContext(), "Vui lòng nhập tên giáo viên", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle arrow click here
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void showMonhoc() {
@@ -236,4 +253,5 @@ public class NhapGv extends AppCompatActivity {
             Toast.makeText(this, "Lỗi khi lấy dữ liệu môn học", Toast.LENGTH_SHORT).show();
         }
     }
+
 }

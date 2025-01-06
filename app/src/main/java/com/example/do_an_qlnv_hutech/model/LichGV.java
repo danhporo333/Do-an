@@ -10,22 +10,24 @@ public class LichGV implements Serializable {
     private String cahoc;
     private String id_monhoc;
     private String monhoc;
+    private String phong_hoc;
 
-//    public LichGV(String malich, String hovaten, String lop, String thu, String cahoc, String id_monhoc, String monhoc) {
-//        this.malich = malich;
-//        this.hovaten = hovaten;
-//        this.lop = lop;
-//        this.thu = thu;
-//        this.cahoc = cahoc;
-//        this.id_monhoc = id_monhoc;
-//        this.monhoc = monhoc;
-//    }
 
-    public LichGV(String thu, String cahoc, String lop, String monhoc) {
+    public LichGV(String malich ,String thu, String cahoc, String lop, String monhoc, String phong_hoc) {
+        this.malich = malich;
         this.thu = thu;
         this.cahoc = cahoc;
         this.lop = lop;
         this.monhoc = monhoc;
+        this.phong_hoc = phong_hoc;
+    }
+
+    public String getPhong_hoc() {
+        return phong_hoc;
+    }
+
+    public void setPhong_hoc(String phong_hoc) {
+        this.phong_hoc = phong_hoc;
     }
 
     public String getMonhoc() {
